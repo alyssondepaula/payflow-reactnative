@@ -1,10 +1,15 @@
 import React from 'react';
-import { View } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Home from '../screens/Home';
 
-// import { Container } from './styles';
+const Tab = createBottomTabNavigator();
 
 const AppRoutes = () => {
-  return <View />;
+  return (
+    <Tab.Navigator>
+      <Tab.Screen name="Home" component={Home} />
+    </Tab.Navigator>
+  );
 }
 
 export default AppRoutes;
