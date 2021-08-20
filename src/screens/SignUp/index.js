@@ -3,9 +3,13 @@ import React from 'react';
 import { StatusBar, View } from 'react-native';
 import GoogleSignInButton from '../../components/GoogleSignInButton';
 
+
 import { Container, Linear, Logomini, Person, TextHeading, TopContainer } from './styles';
 
 const SignUp = () => {
+
+  ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+
   return <Container>
      <StatusBar backgroundColor="orange" barStyle={'light-content'} />
     <TopContainer>

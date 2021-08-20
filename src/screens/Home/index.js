@@ -5,6 +5,9 @@ import BarInfoBoletosPendentes from '../../components/BarInfoBoletosPendentes';
 import BarInfoProfile from '../../components/BarInfoProfile';
 import ItemBoleto from '../../components/ItemBoleto';
 import { Container, LineHorizontal, TextHeadFlatlist, TopContainer } from './styles';
+import * as ScreenOrientation from 'expo-screen-orientation';
+import { useIsFocused } from '@react-navigation/native';
+
 
 
 const DATA = [
@@ -53,9 +56,26 @@ const TOTAL_ITEM_SIZE = 75;
 
 const Home = () => {
 
+  const isFocused = useIsFocused();
+  
+  React.useEffect(()=>{
+
+   async function changeScreenOrientation (){
+        await ScreenOrientation.unlockAsync(ScreenOrientation.OrientationLock.DEFAULT);
+        await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT);
+       console.log('PORT')
+     }
+
+  
+   //  changeScreenOrientation()
+    },
+    [])
+
+  
+
     const scrollY = new Animated.Value(0);
 
-
+ 
 
   return <Container>
      <StatusBar backgroundColor="orange" barStyle={'light-content'} />

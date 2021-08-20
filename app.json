@@ -19,7 +19,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "payflowreact"
+      "bundleIdentifier": "payflowreact",
+      "requireFullScreen": true
     },
     "android": {
       "adaptiveIcon": {
