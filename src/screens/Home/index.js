@@ -1,12 +1,20 @@
 
 import React from 'react';
-import { Animated, StatusBar } from 'react-native';
+import { Alert, Animated, StatusBar, TouchableOpacity } from 'react-native';
 import BarInfoBoletosPendentes from '../../components/BarInfoBoletosPendentes';
 import BarInfoProfile from '../../components/BarInfoProfile';
 import ItemBoleto from '../../components/ItemBoleto';
 import { Container, LineHorizontal, TextHeadFlatlist, TopContainer } from './styles';
 import * as ScreenOrientation from 'expo-screen-orientation';
 import { useIsFocused } from '@react-navigation/native';
+import { useRef } from 'react';
+import {
+  BottomSheetModal,
+} from '@gorhom/bottom-sheet';
+import { useBottomSheetModal } from '@gorhom/bottom-sheet';
+import { useMemo } from 'react';
+import { useCallback } from 'react';
+import ModalDelete from '../../components/ModalDelete';
 
 
 
@@ -53,10 +61,35 @@ const ITEM_SIZE_WIDTH = 327;
 const TOTAL_ITEM_SIZE = 75;
 
 
+const Home = ({ navigation, route, options }) => {
 
-const Home = () => {
+  const { dismiss, dismissAll } = useBottomSheetModal();
 
   const isFocused = useIsFocused();
+
+  // ref
+  const bottomSheetModalRef = useRef(null);
+
+  // variables
+  const snapPoints = useMemo(() => ['35%', '35%'], []);
+
+  // callbacks
+  const handlePresentModalPress = useCallback(() => {
+    bottomSheetModalRef.current?.present();
+  }, []);
+
+  const handlePresentModalPressClose = useCallback(() => {
+    bottomSheetModalRef.current?.dimiss();
+  }, []);
+  const handleSheetChanges = useCallback((index) => {
+    console.log('handleSheetChanges', index);
+  }, []);
+
+  const closeModal = () => bottomSheetModalRef.current?.dimiss()
+  
+
+
+
   
   React.useEffect(()=>{
 
@@ -75,15 +108,34 @@ const Home = () => {
 
     const scrollY = new Animated.Value(0);
 
+
  
 
   return <Container>
+     
+        <BottomSheetModal
+          ref={bottomSheetModalRef}
+          index={1}
+          snapPoints={snapPoints}
+          onChange={handleSheetChanges}
+      
+          bottomInset={0}
+        >
+          
+          <ModalDelete handlePresentModalPressClose={dismissAll} />
+
+        </BottomSheetModal>
+     
+  
+    
+      
      <StatusBar backgroundColor="orange" barStyle={'light-content'} />
      <TopContainer>
-         <BarInfoProfile nome={'User'}/>
+         <BarInfoProfile nome={'user'}/>
          <BarInfoBoletosPendentes quantidadeBoletos={DATA.length}/>
      </TopContainer>
 
+  
      <TextHeadFlatlist>Meus Boletos:</TextHeadFlatlist>
      <LineHorizontal/>
 
@@ -145,7 +197,7 @@ const Home = () => {
      
      
      />
-   
+
   </Container>
 }
 

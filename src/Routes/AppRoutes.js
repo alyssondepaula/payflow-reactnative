@@ -44,6 +44,8 @@ const AppRoutes = () => {
         elevation:  0,
         borderTopWidth: 0,
         height: 75,
+        position: 'absolute',
+        zIndex: 1,
         
       },
       }}>
