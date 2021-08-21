@@ -8,25 +8,16 @@ import IconCustom from '../components/IconCustom';
 import { Animated, Text, TouchableOpacity, View } from 'react-native';
 import Scan from '../screens/Scan';
 import { useNavigation } from '@react-navigation/native';
+import ManualAddBoleto from '../screens/ManualAddBoleto';
 
 
 const Tab = createBottomTabNavigator();
 
 
-function ModalScreen({ navigation }) {
-  return (
-    <View style={{ 
-      flex: 1, alignItems: 'center', justifyContent: 'center', position: 'absolute', zIndex: 22,
-      
-      }}>
-      <Text style={{ fontSize: 30 }}>This is a modal!</Text>
-      <TouchableOpacity onPress={() => navigation.goBack()} title="Dismiss" />
-    </View>
-  );
-}
 
 
-const AppRoutes = () => {
+
+const BottomTabsScreens = () => {
 
   const navigation = useNavigation();
   
@@ -121,6 +112,35 @@ const AppRoutes = () => {
       />
     </Tab.Navigator>
   );
+}
+
+
+const Stack = createStackNavigator();
+
+
+const AppRoutes = () => {
+  return   (
+  <Stack.Navigator 
+  initialRouteName="bottom" 
+  screenOptions={{headerShown: false}}
+  >
+  <Stack.Screen
+  name="bottom"
+  component={BottomTabsScreens} 
+  />
+
+ <Stack.Screen
+  name="manualAdd"
+  component={ManualAddBoleto} 
+  options={{
+    headerShown: true,
+    headerTitle: '',
+    headerStyle: {
+      elevation: 0,
+    }
+  }}
+  />
+</Stack.Navigator>);
 }
 
 

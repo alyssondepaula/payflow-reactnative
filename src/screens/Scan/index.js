@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { StatusBar } from 'react-native';
+import { Alert, StatusBar } from 'react-native';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useWindowDimensions } from 'react-native';
 import * as ScreenOrientation from 'expo-screen-orientation';
-import { Bottom, Container, Top } from './styles';
+import { Bottom, BottomButtom, Container, TextButton, Top } from './styles';
 import { useIsFocused } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 const Scan = () => {
 
     const isFocused = useIsFocused();
+    const navigation = useNavigation();
+
     React.useEffect(()=>{
 
         async function changeScreenOrientation (){
@@ -45,7 +48,21 @@ const Scan = () => {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    alert(`Bar code with type ${type} and data ${data} has been scanned!`);
+    
+    let nome='';
+    let vencimento= data.substring(4,8);
+    let valor= data.substring(10,13)+','+data.substring(13,15);
+    let codigo = data.toString();
+
+    alert(vencimento)
+
+navigation.navigate('manualAdd', {
+      nome,
+      vencimento,
+      valor,
+      codigo: data.toString()
+    });
+
   };
 
   if (hasPermission === null) {
@@ -73,6 +90,9 @@ const Scan = () => {
     </View>
     
     <Bottom/>
+    <BottomButtom onPress={()=>navigation.navigate('manualAdd')}>
+        <TextButton>Inserir código do boleto</TextButton>
+    </BottomButtom>
   </Container>
 }
 
